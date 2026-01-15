@@ -1,0 +1,81 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prince | Portfolio</title>
+    <link rel="shortcut icon" href="./assets/me.png" type="image/x-icon">
+    <link rel="stylesheet" href="{% static './styles/navbar.css' %}">
+    <link rel="stylesheet" href="{% static './styles/footer.css' %}">
+    <link rel="stylesheet" href="{% static './styles/body.css' %}">
+    <link rel="stylesheet" href="{% static './styles/contact.css' %}">
+    <link rel="shortcut icon" href="{% static './assets/me.png' %}" type="image/x-icon">
+</head>
+<body>
+    <!-- navrbar start's here -->
+    <nav class="navbar" id="">
+        <div class="menu" id="">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="logo">
+            <span>P</span>
+        </div>
+        <div class="srch">
+            <input type="search" name="" id="" placeholder="Search....">
+        </div>
+        <div class="btn">
+            <button class="info">Discover More</button>
+        </div>
+    </nav>
+    <!-- navbar end's here -->
+    <!-- content's start here -->
+    <div class="container">
+        <div class="me">
+            <h2>Hi, I'm <span>Prince!</span></h2>
+            <p>A Cyber Security Analyst and Network TroubleShooter</p>
+            <p>A Cyber Security Expert and Network TroubleShooter</p>
+            <p>A Cyber Security Expert and Network TroubleShooter</p>
+            <p>A Cyber Security Expert and Network TroubleShooter</p>
+
+            <div class="links">
+                <div class="btns">
+                    <button id="downloadBtn">Download CV</button>
+                </div>
+                <ul>
+                    <li><a href="#"><img src="{% static './assets/icons/facebook.svg' %}" alt="facebook icon"></a></li>
+                    <li><a href="#"><img src="{% static './assets/icons/whatsapp.svg' %}" alt="Whatsapp icon"></a></li>
+                    <li><a href="#"><img src="{% static './assets/icons/telegram.svg' %}" alt="telegram icon"></a></li>
+                    <li><a href="#"><img src="{% static './assets/icons/linkedin.svg' %}" alt="linkedin icon"></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="img">
+            <img src="{% static './assets/me.png' %}" class="float-image" alt="Prince Faith's image">
+        </div>
+    </div>
+    <!-- content's end here -->
+    <!-- Contact Form starts here -->
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="img2">
+            <img src="{% static './assets/me.png' %}" alt="">
+        </div>
+        <div class="inputs">
+            <input type="text" name="fullname" placeholder="Username or Fullname">
+            <input type="tel" name="phone" class="none" placeholder="Phone Number">
+            <input type="email" name="email" class="none"placeholder="Email Address">
+            <textarea name="review" placeholder="Enter Your Messag..."></textarea>
+            <button type="submit" class="subit">Send</button>
+        </div>
+    </form>
+    <!-- Contact Form ends here -->
+    <!-- footer starts here -->
+    <footer>
+        <p>Copyrights &copy; Allrights reserved. Prince 2025.com</p>
+    </footer>
+    <!-- footer ends here -->
+</body>
+<script src="{% static './scripts/script.js' %}"></script>
+</html>

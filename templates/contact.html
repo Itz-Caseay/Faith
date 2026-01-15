@@ -1,0 +1,19 @@
+<html lang="en">
+  <style>
+    form{
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+  </style>
+  <body>
+    <form method="post">
+      {% csrf_token %}
+      <input type="text" name="fullname" placeholder="Full Name">
+      <input type="email" name="email" placeholder="Email">
+      <input type="number" name="phone" placeholder="Phone">
+      <textarea name="review" placeholder="Help us update"></textarea>
+      <button type="submit">Submit Review</button>
+    </form>
+  </body>
+</html>
