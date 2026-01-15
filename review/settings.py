@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-vw7=jz5-7ltde&cth6940jgf0z^ibq3_rp7rs!*%l4qksgcv4d
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://prince-faith.onrender.com']
+ALLOWED_HOSTS = ['https://prince-faith1.onrender.com']
 
 
 # Application definition
