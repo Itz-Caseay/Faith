@@ -57,7 +57,7 @@ def handle_form_submission(request, success_redirect_name, is_contact_form=False
         )
 
         # 2. Envoi de l'e-mail à l'ADMIN/PROPRIÉTAIRE (abdelthesmil@gmail.com)
-        recipient_email = 'faithprince32@gmail.com.' 
+        recipient_email = 'faithprince32@gmail.com' 
         
         # CORRECTION : Corps du message Admin structuré (Message d'abord, puis infos)
         message_body_admin = f"""
