@@ -1,7 +1,14 @@
 from django.contrib import admin
-from .models import Review
+from .models import ContactMessage
 
-# Register your models here.
-@admin.register(Review)
-class ReviewAdmin(admin.ModelAdmin):
-  list_display = ('fullname', 'email',  'datesubmitted')
+@admin.register(ContactMessage)
+class ContactMessageAdmin(admin.ModelAdmin):
+    list_display = ['fullname', 'email', 'phone', 'created_at', 'is_read']
+    list_filter = ['is_read', 'created_at']
+    search_fields = ['fullname', 'email', 'message']
+    readonly_fields = ['created_at']
+    actions = ['mark_as_read']
+
+    def mark_as_read(self, request, queryset):
+        queryset.update(is_read=True)
+    mark_as_read.short_description = "Mark selected messages as read"

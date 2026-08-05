@@ -1,6 +1,8 @@
 from django.urls import path
-from .views import contact
+from . import views
 
 urlpatterns = [
-  path('', contact, name="contact"),
+    path('', views.home, name='home'),
+    path('admin/messages/', views.view_messages, name='view_messages'),
+    path('admin/messages/mark-read/<int:message_id>/', views.mark_as_read, name='mark_as_read'),
 ]
