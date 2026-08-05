@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,7 +22,6 @@
             margin: 0;
         }
 
-        /* ===== EMAIL CONTAINER ===== */
         .email-wrapper {
             max-width: 600px;
             margin: 0 auto;
@@ -121,6 +121,8 @@
             padding: 12px 40px;
             background: rgba(0, 212, 255, 0.03);
             border-bottom: 1px solid rgba(0, 212, 255, 0.05);
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
         .status-item {
@@ -190,6 +192,8 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
         .message-card .card-header .label {
@@ -400,8 +404,6 @@
             }
 
             .status-bar {
-                flex-wrap: wrap;
-                gap: 8px;
                 padding: 10px 20px;
             }
 
@@ -421,6 +423,7 @@
                 display: flex;
                 flex-direction: column;
                 gap: 10px;
+                align-items: center;
             }
 
             .btn-secondary {
@@ -504,144 +507,16 @@
                 font-size: 11px;
             }
         }
-
-        /* ===== DARK MODE SUPPORT ===== */
-        @media (prefers-color-scheme: light) {
-            body {
-                background: #f0f4ff;
-            }
-
-            .email-wrapper {
-                background: #f0f4ff;
-            }
-
-            .email-container {
-                background: linear-gradient(145deg, #ffffff, #f8faff);
-                border-color: rgba(0, 212, 255, 0.15);
-            }
-
-            .email-header {
-                background: linear-gradient(135deg, rgba(0, 212, 255, 0.03), rgba(123, 47, 252, 0.03));
-            }
-
-            .greeting {
-                color: #0a0e1a;
-            }
-
-            .sub-greeting {
-                color: rgba(0, 0, 0, 0.4);
-            }
-
-            .message-card {
-                background: rgba(0, 0, 0, 0.02);
-                border-color: rgba(0, 0, 0, 0.05);
-            }
-
-            .message-card .card-header {
-                background: rgba(0, 0, 0, 0.02);
-            }
-
-            .message-card .card-body .message-text {
-                color: rgba(0, 0, 0, 0.7);
-            }
-
-            .info-item {
-                background: rgba(0, 0, 0, 0.02);
-                border-color: rgba(0, 0, 0, 0.04);
-            }
-
-            .info-item .info-value {
-                color: rgba(0, 0, 0, 0.7);
-            }
-
-            .status-item {
-                color: rgba(0, 0, 0, 0.4);
-            }
-
-            .status-id {
-                color: rgba(0, 212, 255, 0.6);
-            }
-
-            .email-footer .footer-text {
-                color: rgba(0, 0, 0, 0.3);
-            }
-
-            .security-notice {
-                background: rgba(255, 107, 107, 0.02);
-            }
-
-            .security-notice .text {
-                color: rgba(0, 0, 0, 0.4);
-            }
-
-            .security-notice .text strong {
-                color: rgba(0, 0, 0, 0.6);
-            }
-
-            .btn-secondary {
-                color: rgba(0, 0, 0, 0.4);
-                border-color: rgba(0, 0, 0, 0.1);
-            }
-
-            .btn-secondary:hover {
-                color: #00d4ff;
-                border-color: #00d4ff;
-            }
-
-            .action-divider span {
-                color: rgba(0, 0, 0, 0.2);
-            }
-
-            .notification-badge {
-                color: #00d4ff;
-                -webkit-text-fill-color: #00d4ff;
-                background: linear-gradient(135deg, rgba(0, 212, 255, 0.08), rgba(123, 47, 252, 0.08));
-            }
-
-            .message-card .card-header .label {
-                color: rgba(0, 0, 0, 0.3);
-            }
-
-            .message-card .card-header .timestamp {
-                color: rgba(0, 0, 0, 0.2);
-            }
-        }
-
-        /* ===== PRINT STYLES ===== */
-        @media print {
-            .email-wrapper {
-                background: white;
-            }
-
-            .email-container {
-                border: 1px solid #ddd;
-                box-shadow: none;
-            }
-
-            .btn-primary,
-            .btn-secondary {
-                display: none;
-            }
-
-            .action-section {
-                display: none;
-            }
-
-            .status-bar {
-                display: none;
-            }
-        }
     </style>
 </head>
 <body>
-    <!-- ===== EMAIL WRAPPER ===== -->
     <div class="email-wrapper">
         <div class="email-container">
 
             <!-- ===== HEADER ===== -->
             <div class="email-header">
                 <div class="logo">PRINCE</div>
-                <div class="logo-badge">Cyber Security</div>
+                <div class="logo-badge">🔐 Cyber Security</div>
                 <div class="notification-badge">
                     <span class="bell">🔔</span> New Contact Message
                 </div>
@@ -690,7 +565,7 @@
                     </div>
                     <div class="info-item">
                         <span class="info-label">📅 Sent</span>
-                        <span class="info-value">{{ created_at|default:"January 2025" }}</span>
+                        <span class="info-value">{{ created_at|default:"Just now" }}</span>
                     </div>
                 </div>
 
@@ -702,7 +577,7 @@
                     </div>
                     <div class="card-body">
                         <div class="message-text">
-                            {{ message|default:"Hello, I'm interested in your cyber security services. I have a project that needs immediate attention. Please get back to me as soon as possible." }}
+                            {{ message|default:"Hello, I'm interested in your cyber security services." }}
                         </div>
                     </div>
                 </div>
@@ -714,22 +589,6 @@
                     </a>
                     <a href="mailto:{{ email|default:'john@example.com' }}" class="btn-secondary">
                         ✉️ Reply Directly
-                    </a>
-                </div>
-
-                <div class="action-divider">
-                    <span>quick actions</span>
-                </div>
-
-                <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
-                    <a href="#" style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; background: rgba(0, 212, 255, 0.05); border-radius: 20px; text-decoration: none; color: rgba(255, 255, 255, 0.4); font-size: 12px;">
-                        ✅ Mark as Read
-                    </a>
-                    <a href="#" style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; background: rgba(0, 212, 255, 0.05); border-radius: 20px; text-decoration: none; color: rgba(255, 255, 255, 0.4); font-size: 12px;">
-                        ⭐ Star Message
-                    </a>
-                    <a href="#" style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; background: rgba(255, 107, 107, 0.05); border-radius: 20px; text-decoration: none; color: rgba(255, 107, 107, 0.4); font-size: 12px;">
-                        🗑️ Archive
                     </a>
                 </div>
 
@@ -750,10 +609,7 @@
                 <div class="footer-divider"></div>
                 <div class="footer-text">
                     &copy; 2025 Prince. All rights reserved.<br>
-                    This is an automated notification from your portfolio website.<br>
-                    <a href="{{ unsubscribe_url|default:'#' }}">Unsubscribe</a> • 
-                    <a href="{{ privacy_url|default:'#' }}">Privacy Policy</a> • 
-                    <a href="{{ terms_url|default:'#' }}">Terms of Service</a>
+                    This is an automated notification from your portfolio website.
                 </div>
             </div>
 
