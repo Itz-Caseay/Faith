@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Contact Message</title>
+    <style>
+        /* ===== RESET ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #0a0e1a;
+            color: #e8e8ff;
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* ===== EMAIL CONTAINER ===== */
+        .email-wrapper {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #0a0e1a;
+        }
+
+        .email-container {
+            background: linear-gradient(145deg, #0f1a2e, #0a0e1a);
+            border-radius: 24px;
+            border: 1px solid rgba(0, 212, 255, 0.08);
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        /* ===== HEADER ===== */
+        .email-header {
+            padding: 40px 40px 30px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.05), rgba(123, 47, 252, 0.05));
+            border-bottom: 1px solid rgba(0, 212, 255, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .email-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 40%, rgba(0, 212, 255, 0.03) 0%, transparent 60%),
+                        radial-gradient(circle at 70% 60%, rgba(123, 47, 252, 0.03) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #00d4ff, #7b2ffc, #ff6b9d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .logo-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 20px;
+            font-size: 11px;
+            color: #00d4ff;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-top: 8px;
+            -webkit-text-fill-color: #00d4ff;
+        }
+
+        .notification-badge {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 8px 24px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(123, 47, 252, 0.15));
+            border-radius: 40px;
+            font-size: 14px;
+            color: #00d4ff;
+            font-weight: 600;
+            letter-spacing: 1px;
+            border: 1px solid rgba(0, 212, 255, 0.15);
+            -webkit-text-fill-color: #00d4ff;
+        }
+
+        .notification-badge .bell {
+            display: inline-block;
+            animation: ring 2s ease-in-out infinite;
+        }
+
+        @keyframes ring {
+            0%, 100% { transform: rotate(0deg); }
+            10% { transform: rotate(15deg); }
+            20% { transform: rotate(-15deg); }
+            30% { transform: rotate(10deg); }
+            40% { transform: rotate(-10deg); }
+            50% { transform: rotate(5deg); }
+            60%, 100% { transform: rotate(0deg); }
+        }
+
+        /* ===== STATUS BAR ===== */
+        .status-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 40px;
+            background: rgba(0, 212, 255, 0.03);
+            border-bottom: 1px solid rgba(0, 212, 255, 0.05);
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #51cf66;
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        .status-id {
+            font-family: 'Courier New', monospace;
+            color: rgba(0, 212, 255, 0.4);
+            font-size: 11px;
+        }
+
+        /* ===== BODY ===== */
+        .email-body {
+            padding: 40px;
+        }
+
+        .greeting {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #ffffff;
+        }
+
+        .greeting span {
+            background: linear-gradient(135deg, #00d4ff, #7b2ffc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .sub-greeting {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 15px;
+            margin-bottom: 25px;
+        }
+
+        /* ===== MESSAGE CARD ===== */
+        .message-card {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            overflow: hidden;
+            margin: 20px 0 25px;
+        }
+
+        .message-card .card-header {
+            padding: 14px 20px;
+            background: rgba(0, 212, 255, 0.03);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .message-card .card-header .label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.3);
+            font-weight: 600;
+        }
+
+        .message-card .card-header .timestamp {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.2);
+            font-family: 'Courier New', monospace;
+        }
+
+        .message-card .card-body {
+            padding: 20px;
+        }
+
+        .message-card .card-body .message-text {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 15px;
+            line-height: 1.8;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        /* ===== SENDER INFO ===== */
+        .sender-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .info-item {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            transition: 0.3s;
+        }
+
+        .info-item .info-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.2);
+            font-weight: 600;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .info-item .info-value {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+            font-weight: 500;
+            word-break: break-all;
+        }
+
+        .info-item .info-value a {
+            color: #00d4ff;
+            text-decoration: none;
+        }
+
+        .info-item .info-value a:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== ACTION BUTTONS ===== */
+        .action-section {
+            margin: 30px 0 20px;
+            text-align: center;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            padding: 12px 32px;
+            background: linear-gradient(135deg, #00d4ff, #7b2ffc);
+            color: #0a0e1a !important;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+            border-radius: 40px;
+            transition: 0.3s;
+            box-shadow: 0 4px 20px rgba(0, 212, 255, 0.2);
+            border: none;
+            cursor: pointer;
+            -webkit-text-fill-color: #0a0e1a;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 40px rgba(0, 212, 255, 0.3);
+        }
+
+        .btn-secondary {
+            display: inline-block;
+            padding: 12px 32px;
+            background: transparent;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: 0.3s;
+            margin-left: 10px;
+        }
+
+        .btn-secondary:hover {
+            border-color: #00d4ff;
+            color: #00d4ff;
+        }
+
+        .action-divider {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .action-divider::before,
+        .action-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+        }
+
+        .action-divider span {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.2);
+            white-space: nowrap;
+        }
+
+        /* ===== SECURITY NOTICE ===== */
+        .security-notice {
+            margin: 25px 0 10px;
+            padding: 16px 20px;
+            background: rgba(255, 107, 107, 0.03);
+            border-left: 3px solid rgba(255, 107, 107, 0.3);
+            border-radius: 8px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .security-notice .icon {
+            font-size: 18px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .security-notice .text {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.4);
+            line-height: 1.6;
+        }
+
+        .security-notice .text strong {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* ===== FOOTER ===== */
+        .email-footer {
+            padding: 30px 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+        }
+
+        .email-footer .footer-text {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.2);
+            line-height: 1.8;
+        }
+
+        .email-footer .footer-text a {
+            color: rgba(0, 212, 255, 0.4);
+            text-decoration: none;
+        }
+
+        .email-footer .footer-text a:hover {
+            color: #00d4ff;
+            text-decoration: underline;
+        }
+
+        .email-footer .footer-divider {
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.2), transparent);
+            margin: 16px auto;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media screen and (max-width: 600px) {
+            .email-wrapper {
+                padding: 10px;
+            }
+
+            .email-header {
+                padding: 30px 20px 20px;
+            }
+
+            .email-body {
+                padding: 24px 20px;
+            }
+
+            .status-bar {
+                flex-wrap: wrap;
+                gap: 8px;
+                padding: 10px 20px;
+            }
+
+            .sender-info {
+                grid-template-columns: 1fr;
+            }
+
+            .logo {
+                font-size: 26px;
+            }
+
+            .greeting {
+                font-size: 20px;
+            }
+
+            .action-section {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .btn-secondary {
+                margin-left: 0;
+            }
+
+            .message-card .card-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+            }
+
+            .email-footer {
+                padding: 20px;
+            }
+
+            .security-notice {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        @media screen and (max-width: 380px) {
+            .email-wrapper {
+                padding: 5px;
+            }
+
+            .email-header {
+                padding: 20px 15px 15px;
+            }
+
+            .email-body {
+                padding: 16px 12px;
+            }
+
+            .status-bar {
+                padding: 8px 15px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 4px;
+            }
+
+            .logo {
+                font-size: 22px;
+            }
+
+            .greeting {
+                font-size: 17px;
+            }
+
+            .sub-greeting {
+                font-size: 13px;
+            }
+
+            .message-card .card-body {
+                padding: 14px;
+            }
+
+            .message-card .card-body .message-text {
+                font-size: 13px;
+            }
+
+            .notification-badge {
+                font-size: 12px;
+                padding: 6px 16px;
+            }
+
+            .btn-primary,
+            .btn-secondary {
+                padding: 10px 20px;
+                font-size: 13px;
+                width: 100%;
+                text-align: center;
+            }
+
+            .info-item .info-value {
+                font-size: 13px;
+            }
+
+            .email-footer .footer-text {
+                font-size: 11px;
+            }
+        }
+
+        /* ===== DARK MODE SUPPORT ===== */
+        @media (prefers-color-scheme: light) {
+            body {
+                background: #f0f4ff;
+            }
+
+            .email-wrapper {
+                background: #f0f4ff;
+            }
+
+            .email-container {
+                background: linear-gradient(145deg, #ffffff, #f8faff);
+                border-color: rgba(0, 212, 255, 0.15);
+            }
+
+            .email-header {
+                background: linear-gradient(135deg, rgba(0, 212, 255, 0.03), rgba(123, 47, 252, 0.03));
+            }
+
+            .greeting {
+                color: #0a0e1a;
+            }
+
+            .sub-greeting {
+                color: rgba(0, 0, 0, 0.4);
+            }
+
+            .message-card {
+                background: rgba(0, 0, 0, 0.02);
+                border-color: rgba(0, 0, 0, 0.05);
+            }
+
+            .message-card .card-header {
+                background: rgba(0, 0, 0, 0.02);
+            }
+
+            .message-card .card-body .message-text {
+                color: rgba(0, 0, 0, 0.7);
+            }
+
+            .info-item {
+                background: rgba(0, 0, 0, 0.02);
+                border-color: rgba(0, 0, 0, 0.04);
+            }
+
+            .info-item .info-value {
+                color: rgba(0, 0, 0, 0.7);
+            }
+
+            .status-item {
+                color: rgba(0, 0, 0, 0.4);
+            }
+
+            .status-id {
+                color: rgba(0, 212, 255, 0.6);
+            }
+
+            .email-footer .footer-text {
+                color: rgba(0, 0, 0, 0.3);
+            }
+
+            .security-notice {
+                background: rgba(255, 107, 107, 0.02);
+            }
+
+            .security-notice .text {
+                color: rgba(0, 0, 0, 0.4);
+            }
+
+            .security-notice .text strong {
+                color: rgba(0, 0, 0, 0.6);
+            }
+
+            .btn-secondary {
+                color: rgba(0, 0, 0, 0.4);
+                border-color: rgba(0, 0, 0, 0.1);
+            }
+
+            .btn-secondary:hover {
+                color: #00d4ff;
+                border-color: #00d4ff;
+            }
+
+            .action-divider span {
+                color: rgba(0, 0, 0, 0.2);
+            }
+
+            .notification-badge {
+                color: #00d4ff;
+                -webkit-text-fill-color: #00d4ff;
+                background: linear-gradient(135deg, rgba(0, 212, 255, 0.08), rgba(123, 47, 252, 0.08));
+            }
+
+            .message-card .card-header .label {
+                color: rgba(0, 0, 0, 0.3);
+            }
+
+            .message-card .card-header .timestamp {
+                color: rgba(0, 0, 0, 0.2);
+            }
+        }
+
+        /* ===== PRINT STYLES ===== */
+        @media print {
+            .email-wrapper {
+                background: white;
+            }
+
+            .email-container {
+                border: 1px solid #ddd;
+                box-shadow: none;
+            }
+
+            .btn-primary,
+            .btn-secondary {
+                display: none;
+            }
+
+            .action-section {
+                display: none;
+            }
+
+            .status-bar {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== EMAIL WRAPPER ===== -->
+    <div class="email-wrapper">
+        <div class="email-container">
+
+            <!-- ===== HEADER ===== -->
+            <div class="email-header">
+                <div class="logo">PRINCE</div>
+                <div class="logo-badge">Cyber Security</div>
+                <div class="notification-badge">
+                    <span class="bell">🔔</span> New Contact Message
+                </div>
+            </div>
+
+            <!-- ===== STATUS BAR ===== -->
+            <div class="status-bar">
+                <div class="status-item">
+                    <span class="status-dot"></span>
+                    Message Received
+                </div>
+                <div class="status-item">
+                    🕐 {{ created_at|default:"Just now" }}
+                </div>
+                <div class="status-item">
+                    <span class="status-id">#MSG-{{ message_id|default:"0000" }}</span>
+                </div>
+            </div>
+
+            <!-- ===== BODY ===== -->
+            <div class="email-body">
+
+                <!-- Greeting -->
+                <div class="greeting">
+                    Hey <span>Prince</span> 👋
+                </div>
+                <div class="sub-greeting">
+                    You have received a new message from your portfolio contact form.
+                </div>
+
+                <!-- Sender Information -->
+                <div class="sender-info">
+                    <div class="info-item">
+                        <span class="info-label">👤 Full Name</span>
+                        <span class="info-value">{{ fullname|default:"John Doe" }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">📱 Phone</span>
+                        <span class="info-value">{{ phone|default:"Not provided" }}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">✉️ Email</span>
+                        <span class="info-value">
+                            <a href="mailto:{{ email|default:'john@example.com' }}">{{ email|default:"john@example.com" }}</a>
+                        </span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">📅 Sent</span>
+                        <span class="info-value">{{ created_at|default:"January 2025" }}</span>
+                    </div>
+                </div>
+
+                <!-- Message Card -->
+                <div class="message-card">
+                    <div class="card-header">
+                        <span class="label">💬 Message Content</span>
+                        <span class="timestamp">{{ created_at|default:"Just now" }}</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="message-text">
+                            {{ message|default:"Hello, I'm interested in your cyber security services. I have a project that needs immediate attention. Please get back to me as soon as possible." }}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-section">
+                    <a href="{{ admin_url|default:'#' }}" class="btn-primary">
+                        📋 View in Admin Panel
+                    </a>
+                    <a href="mailto:{{ email|default:'john@example.com' }}" class="btn-secondary">
+                        ✉️ Reply Directly
+                    </a>
+                </div>
+
+                <div class="action-divider">
+                    <span>quick actions</span>
+                </div>
+
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+                    <a href="#" style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; background: rgba(0, 212, 255, 0.05); border-radius: 20px; text-decoration: none; color: rgba(255, 255, 255, 0.4); font-size: 12px;">
+                        ✅ Mark as Read
+                    </a>
+                    <a href="#" style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; background: rgba(0, 212, 255, 0.05); border-radius: 20px; text-decoration: none; color: rgba(255, 255, 255, 0.4); font-size: 12px;">
+                        ⭐ Star Message
+                    </a>
+                    <a href="#" style="display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; background: rgba(255, 107, 107, 0.05); border-radius: 20px; text-decoration: none; color: rgba(255, 107, 107, 0.4); font-size: 12px;">
+                        🗑️ Archive
+                    </a>
+                </div>
+
+                <!-- Security Notice -->
+                <div class="security-notice">
+                    <span class="icon">🔒</span>
+                    <div class="text">
+                        <strong>Security Notice:</strong> This email contains confidential information. 
+                        Please do not forward or share this message without authorization. 
+                        If you received this email in error, please delete it immediately.
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ===== FOOTER ===== -->
+            <div class="email-footer">
+                <div class="footer-divider"></div>
+                <div class="footer-text">
+                    &copy; 2025 Prince. All rights reserved.<br>
+                    This is an automated notification from your portfolio website.<br>
+                    <a href="{{ unsubscribe_url|default:'#' }}">Unsubscribe</a> • 
+                    <a href="{{ privacy_url|default:'#' }}">Privacy Policy</a> • 
+                    <a href="{{ terms_url|default:'#' }}">Terms of Service</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

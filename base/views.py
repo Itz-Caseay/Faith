@@ -15,7 +15,7 @@ def home(request):
             # Optional: Send email notification
             try:
                 send_mail(
-                    subject=f"New Contact Message from {contact.fullname}",
+                    subject=f"New Contact Message from {contact.email}",
                     message=f"""
                     Name: {contact.fullname}
                     Phone: {contact.phone or 'Not provided'}
