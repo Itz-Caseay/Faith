@@ -1,0 +1,901 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Terms of Service | Prince</title>
+    <link rel="shortcut icon" href="{% static './assets/logo.png' %}" type="image/x-icon">
+    
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00d4ff;
+            --secondary: #7b2ffc;
+            --accent: #ff6b9d;
+            --dark: #0a0e1a;
+            --dark-secondary: #0f1a2e;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --text: #e8e8ff;
+            --shadow: 0 8px 32px rgba(0, 212, 255, 0.15);
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--dark);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* ===== BACKGROUND ===== */
+        .network-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: 
+                radial-gradient(ellipse at 30% 40%, rgba(0, 212, 255, 0.03) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 60%, rgba(123, 47, 252, 0.03) 0%, transparent 60%),
+                linear-gradient(180deg, #0a0e1a 0%, #0f1a2e 50%, #0a0e1a 100%);
+            pointer-events: none;
+        }
+
+        .network-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            background-image: 
+                linear-gradient(rgba(0, 212, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 212, 255, 0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridShift 30s linear infinite;
+        }
+
+        @keyframes gridShift {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(60px, 60px); }
+        }
+
+        .glow-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .glow-orb-1 {
+            width: 400px;
+            height: 400px;
+            top: -100px;
+            right: -100px;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.06), transparent);
+        }
+
+        .glow-orb-2 {
+            width: 300px;
+            height: 300px;
+            bottom: -50px;
+            left: -50px;
+            background: radial-gradient(circle, rgba(123, 47, 252, 0.04), transparent);
+        }
+
+        /* ===== WRAPPER ===== */
+        .wrapper {
+            position: relative;
+            z-index: 1;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.6rem 1.5rem;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 60px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            gap: 0.8rem;
+        }
+
+        .menu {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+            padding: 6px;
+            border-radius: 8px;
+            transition: 0.3s;
+            min-height: 44px;
+            min-width: 44px;
+            justify-content: center;
+        }
+
+        .menu:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .menu span {
+            display: block;
+            width: clamp(20px, 3vw, 26px);
+            height: 2px;
+            background: var(--primary);
+            border-radius: 2px;
+            transition: 0.3s;
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+        }
+
+        .menu:hover span:nth-child(2) {
+            width: 16px;
+        }
+
+        .logo {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -2px;
+            text-decoration: none;
+            position: relative;
+            text-shadow: 0 0 40px rgba(0, 212, 255, 0.2);
+        }
+
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transition: 0.3s;
+        }
+
+        .logo:hover::after {
+            transform: scaleX(1);
+        }
+
+        .btn .info {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 40px;
+            color: var(--dark);
+            font-weight: 700;
+            font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 20px rgba(0, 212, 255, 0.3);
+            white-space: nowrap;
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn .info:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 40px rgba(0, 212, 255, 0.5);
+        }
+
+        .btn .info a {
+            color: var(--dark);
+            text-decoration: none;
+        }
+
+        /* ===== PAGE HEADER ===== */
+        .page-header {
+            text-align: center;
+            padding: 2rem 0 3rem;
+            position: relative;
+        }
+
+        .page-header .badge {
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 40px;
+            font-size: clamp(0.6rem, 1vw, 0.8rem);
+            color: var(--primary);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .page-header h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header h1 span {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .page-header p {
+            font-size: clamp(1rem, 1.5vw, 1.2rem);
+            color: rgba(255, 255, 255, 0.5);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .page-header .last-updated {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.3rem 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 40px;
+            font-size: clamp(0.7rem, 1vw, 0.85rem);
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* ===== TABLE OF CONTENTS ===== */
+        .toc {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 30px;
+            border: 1px solid var(--glass-border);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .toc h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.8rem;
+        }
+
+        .toc-item {
+            padding: 0.5rem 0.8rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+            transition: 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .toc-item:hover {
+            background: rgba(0, 212, 255, 0.05);
+            transform: translateX(5px);
+        }
+
+        .toc-item a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .toc-item a:hover {
+            color: var(--primary);
+        }
+
+        .toc-item .num {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.8rem;
+            min-width: 25px;
+        }
+
+        /* ===== CONTENT SECTION ===== */
+        .content-section {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 40px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow);
+            padding: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .content-section h2 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            margin-bottom: 1rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            scroll-margin-top: 80px;
+        }
+
+        .content-section h2 .icon {
+            font-size: 1.5rem;
+        }
+
+        .content-section p {
+            font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 1rem;
+        }
+
+        .content-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0 1.5rem;
+        }
+
+        .content-section ul li {
+            padding: 0.8rem 1rem;
+            padding-left: 2.5rem;
+            position: relative;
+            font-size: clamp(0.9rem, 1.1vw, 1rem);
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            transition: 0.3s;
+        }
+
+        .content-section ul li:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .content-section ul li::before {
+            content: '▸';
+            position: absolute;
+            left: 0.5rem;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .content-section .highlight-box {
+            background: rgba(0, 212, 255, 0.05);
+            border-left: 3px solid var(--primary);
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+        }
+
+        .content-section .highlight-box.warning {
+            border-left-color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.05);
+        }
+
+        .content-section .highlight-box.success {
+            border-left-color: #51cf66;
+            background: rgba(81, 207, 102, 0.05);
+        }
+
+        .content-section .highlight-box p {
+            margin-bottom: 0;
+        }
+
+        .content-section .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent);
+            margin: 2rem 0;
+            opacity: 0.2;
+        }
+
+        /* ===== BACK TO TOP ===== */
+        .back-top {
+            text-align: right;
+            margin-top: 1rem;
+        }
+
+        .back-top a {
+            color: rgba(255, 255, 255, 0.3);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-top a:hover {
+            color: var(--primary);
+        }
+
+        /* ===== BACK TO HOME ===== */
+        .back-home {
+            text-align: center;
+            margin: 2rem 0 3rem;
+        }
+
+        .back-home a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.7rem 2rem;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 40px;
+            color: var(--text);
+            text-decoration: none;
+            transition: 0.3s;
+            backdrop-filter: blur(10px);
+            font-weight: 600;
+        }
+
+        .back-home a:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            margin-top: 2rem;
+            padding: 1.5rem 0;
+            border-top: 1px solid var(--glass-border);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .footer p {
+            color: rgba(255, 255, 255, 0.3);
+            font-size: clamp(0.6rem, 1vw, 0.85rem);
+        }
+
+        .footer .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer .footer-links a {
+            color: rgba(255, 255, 255, 0.3);
+            text-decoration: none;
+            font-size: clamp(0.6rem, 1vw, 0.85rem);
+            transition: 0.3s;
+        }
+
+        .footer .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .footer .footer-links a.active {
+            color: var(--primary);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media screen and (max-width: 900px) {
+            .content-section {
+                padding: 2rem 1.5rem;
+                border-radius: 30px;
+            }
+
+            .navbar {
+                padding: 0.5rem 1rem;
+                border-radius: 40px;
+            }
+
+            .toc-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            .wrapper {
+                padding: 0.5rem;
+            }
+
+            .navbar {
+                padding: 0.4rem 0.8rem;
+                border-radius: 30px;
+                gap: 0.4rem;
+            }
+
+            .menu span {
+                width: 18px;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .btn .info {
+                padding: 0.3rem 0.8rem;
+                font-size: 0.6rem;
+            }
+
+            .content-section {
+                padding: 1.5rem 1rem;
+                border-radius: 25px;
+            }
+
+            .content-section h2 {
+                font-size: 1.3rem;
+            }
+
+            .content-section ul li {
+                padding: 0.6rem 0.8rem;
+                padding-left: 2rem;
+                font-size: 0.85rem;
+            }
+
+            .content-section .highlight-box {
+                padding: 1rem 1.2rem;
+            }
+
+            .page-header h1 {
+                font-size: 2rem;
+            }
+
+            .footer {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer .footer-links {
+                justify-content: center;
+            }
+
+            .glow-orb-1, .glow-orb-2 {
+                width: 200px;
+                height: 200px;
+            }
+
+            .toc {
+                padding: 1.2rem;
+            }
+
+            .toc-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.5rem;
+            }
+
+            .toc-item {
+                font-size: 0.8rem;
+                padding: 0.3rem 0.6rem;
+            }
+        }
+
+        @media screen and (max-width: 380px) {
+            .wrapper {
+                padding: 0.2rem;
+            }
+
+            .navbar {
+                padding: 0.2rem 0.5rem;
+                border-radius: 20px;
+                gap: 0.2rem;
+            }
+
+            .menu span {
+                width: 14px;
+                height: 1.5px;
+            }
+
+            .logo {
+                font-size: 1.1rem;
+            }
+
+            .btn .info {
+                padding: 0.15rem 0.5rem;
+                font-size: 0.45rem;
+                border-radius: 15px;
+            }
+
+            .content-section {
+                padding: 1rem 0.6rem;
+                border-radius: 15px;
+            }
+
+            .content-section h2 {
+                font-size: 1.1rem;
+            }
+
+            .content-section p {
+                font-size: 0.8rem;
+            }
+
+            .content-section ul li {
+                font-size: 0.75rem;
+                padding: 0.4rem 0.6rem;
+                padding-left: 1.5rem;
+            }
+
+            .page-header h1 {
+                font-size: 1.6rem;
+            }
+
+            .page-header p {
+                font-size: 0.8rem;
+            }
+
+            .back-home a {
+                padding: 0.4rem 1rem;
+                font-size: 0.7rem;
+            }
+
+            .footer p,
+            .footer .footer-links a {
+                font-size: 0.45rem;
+            }
+
+            .toc-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .toc-item {
+                font-size: 0.7rem;
+            }
+        }
+
+        @media (pointer: coarse) {
+            button,
+            .menu,
+            .btn .info {
+                min-height: 44px;
+                min-width: 44px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== BACKGROUND ===== -->
+    <div class="network-bg"></div>
+    <div class="network-grid"></div>
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+
+    <!-- ===== MAIN WRAPPER ===== -->
+    <div class="wrapper">
+        <!-- ===== NAVBAR ===== -->
+        <nav class="navbar">
+            <div class="menu" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <a href="{% url 'home' %}" class="logo">PRINCE</a>
+            <div class="btn">
+                <a href="{% url 'home' %}#contact" class="info">🔒 Contact</a>
+            </div>
+        </nav>
+
+        <!-- ===== PAGE HEADER ===== -->
+        <div class="page-header">
+            <div class="badge">⚖️ Terms of Service</div>
+            <h1>Our <span>Terms</span></h1>
+            <p>Please read these terms carefully before using our services. By using our website, you agree to these terms.</p>
+            <div class="last-updated">📅 Last Updated: January 2025</div>
+        </div>
+
+        <!-- ===== TABLE OF CONTENTS ===== -->
+        <div class="toc">
+            <h3>📑 Table of Contents</h3>
+            <div class="toc-grid">
+                <div class="toc-item"><a href="#section-1"><span class="num">1.</span> Acceptance of Terms</a></div>
+                <div class="toc-item"><a href="#section-2"><span class="num">2.</span> Services Provided</a></div>
+                <div class="toc-item"><a href="#section-3"><span class="num">3.</span> User Responsibilities</a></div>
+                <div class="toc-item"><a href="#section-4"><span class="num">4.</span> Intellectual Property</a></div>
+                <div class="toc-item"><a href="#section-5"><span class="num">5.</span> Third-Party Links</a></div>
+                <div class="toc-item"><a href="#section-6"><span class="num">6.</span> User-Generated Content</a></div>
+                <div class="toc-item"><a href="#section-7"><span class="num">7.</span> Disclaimer of Warranties</a></div>
+                <div class="toc-item"><a href="#section-8"><span class="num">8.</span> Limitation of Liability</a></div>
+                <div class="toc-item"><a href="#section-9"><span class="num">9.</span> Indemnification</a></div>
+                <div class="toc-item"><a href="#section-10"><span class="num">10.</span> Termination</a></div>
+                <div class="toc-item"><a href="#section-11"><span class="num">11.</span> Changes to Terms</a></div>
+                <div class="toc-item"><a href="#section-12"><span class="num">12.</span> Governing Law</a></div>
+                <div class="toc-item"><a href="#section-13"><span class="num">13.</span> Contact Information</a></div>
+            </div>
+        </div>
+
+        <!-- ===== CONTENT ===== -->
+        <div class="content-section">
+            <!-- Section 1 -->
+            <h2 id="section-1"><span class="icon">📋</span> 1. Acceptance of Terms</h2>
+            <p>By accessing and using this website, you accept and agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our website.</p>
+            <div class="highlight-box warning">
+                <p>⚠️ These terms constitute a legally binding agreement between you and Prince Portfolio.</p>
+            </div>
+            <div class="back-top"><a href="#">↑ Back to Top</a></div>
+
+            <div class="divider"></div>
+
+            <!-- Section 2 -->
+            <h2 id="section-2"><span class="icon">🛡️</span> 2. Services Provided</h2>
+            <p>We provide the following services:</p>
+            <ul>
+                <li><strong>Portfolio Showcase:</strong> Display of professional work and expertise</li>
+                <li><strong>Contact Form:</strong> Communication channel for inquiries</li>
+                <li><strong>Information Sharing:</strong> Cybersecurity insights and knowledge sharing</li>
+                <li><strong>Consultation:</strong> Professional consultation services (subject to availability)</li>
+            </ul>
+            <div class="back-top"><a href="#">↑ Back to Top</a></div>
+
+            <div class="divider"></div>
+
+            <!-- Section 3 -->
+            <h2 id="section-3"><span class="icon">👤</span> 3. User Responsibilities</h2>
+            <p>As a user of this website, you agree to:</p>
+            <ul>
+                <li><strong>Accuracy:</strong> Provide accurate and complete information</li>
+                <li><strong>Compliance:</strong> Comply with all applicable laws and regulations</li>
+                <li><strong>Respect:</strong> Respect the rights and privacy of others</li>
+                <li><strong>Security:</strong> Not attempt to compromise website security</li>
+                <li><strong>Prohibited Activities:</strong> Not engage in any illegal, harmful, or offensive activities</li>
+            </ul>
+            <div class="highlight-box warning">
+                <p>⚠️ Violation of these responsibilities may result in termination of access.</p>
+            </div>
+            <div class="back-top"><a href="#">↑ Back to Top</a></div>
+
+            <div class="divider"></div>
+
+            <!-- Section 4 -->
+            <h2 id="section-4"><span class="icon">🔒</span> 4. Intellectual Property</h2>
+            <p>All content on this website is protected by intellectual property rights:</p>
+            <ul>
+                <li><strong>Content Ownership:</strong> All content, including text, images, and design, is owned by Prince</li>
+                <li><strong>Restrictions:</strong> You may not copy, reproduce, or distribute content without permission</li>
+                <li><strong>Trademarks:</strong> All trademarks and logos are the property of their respective owners</li>
+                <li><strong>Fair Use:</strong> Limited fair use is permitted for non-commercial purposes</li>
+            </ul>
+            <div class="back-top"><a href="#">↑ Back to Top</a></div>
+
+            <div class="divider"></div>
+
+            <!-- Section 5 -->
+            <h2 id="section-5"><span class="icon">🔗</span> 5. Third-Party Links</h2>
+            <p>Our website may contain links to third-party websites. These links are provided for your convenience and do not constitute endorsement. We are not responsible for the content or practices of these websites.</p>
+            <div class="highlight-box">
+                <p>🔗 We recommend reviewing the privacy policies and terms of any third-party websites you visit.</p>
+            </div>
+            <div class="back-top"><a href="#">↑ Back to Top</a></div>
+
+            <div class="divider"></div>
+
+            <!-- Section 6 -->
+            <h2 id="section-6"><span class="icon">📝</span> 6. User-Generated Content</h2>
+            <p>When you submit content to our website (including messages, feedback, or inquiries):</p>
+            <ul>
+                <li><strong>License:</strong> You grant us a non-exclusive, royalty-free license to use your content</li>
+                <li><strong>Responsibility:</strong> You are solely responsible for your submissions</li>
+                <li><strong>Moderation:</strong> We reserve the right to moderate or remove content at our discretion</li>
+            </ul>
+            <div class="back-top"><a href="#">↑ Back to Top</a></div>
+
+            <div class="divider"></div>
+
+            <!-- Section 7 -->
+            <h2 id="section-7"><span class="icon">⚠️</span> 7. Disclaimer of Warranties</h2>
+            <p>This website is provided "as is" without any warranties:</p>
+            <ul>
+                <li><strong>No Guarantee:</strong> We do not guarantee that the website will be error-free or uninterrupted</li>
+                <li><strong>No Liability:</strong> We are not liable for any damages arising from use of this website</li>
+                <li><strong>Information Accuracy:</strong> We strive for accuracy but do not guarantee information completeness</li>
+            </ul>
+            <div class="highlight-box warning">
+                <p>⚠️ Use this website at your own risk. We are not responsible for any losses or damages.</p>
+            </div>
+            <div class="back-top"><a href="#">↑ Back to Top</a></div>
+
+            <div class="divider"></div>
+
+            <!-- Section 8 -->
+            <h2 id="section-8"><span class="icon">🔒</span> 8. Limitation of Liability</h2>
+            <p>To the maximum extent permitted by law, we are not liable for:</p>
+            <ul>
+                <li>Direct, indirect, or consequential damages</li>
+                <li>Loss of data, revenue, or profits</li>
+                <li>Any unauthorized access to or use of our servers</li>
+                <li>Any bugs, viruses, or other harmful code</li>
+            </ul>
+            <div class="highlight-box warning">
+                <p>⚠️ Our liability is limited to the maximum extent permitted by applicable law.</p>
+            </div>
+            <div class="back-top"><a href="#">↑ Back to Top</a></div>
+
+            <div class="divider"></div>
+
+            <!-- Section 9 -->
+            <h2 id="section-9"><span class="icon">📜</span> 9. Indemnification</h2>
+            <p>You agree to indemnify and hold us harmless from any claims, damages, or expenses arising from your use of our website or violation of these terms.</p>
+            <div class="back-top"><a href="#">↑ Back to Top</a></div>
+
+            <div class="divider"></div>
+
+            <!-- Section 10 -->
+            <h2 id="section-10"><span class="icon">⏸️</span> 10. Termination</h2>
+            <p>We reserve the right to terminate or suspend access to our website immediately, without prior notice, for any reason, including without limitation:</p>
+            <ul>
+                <li>Violation of these Terms of Service</li>
+                <li>Illegal or harmful activities</li>
+                <li>Security concerns</li>
+            </ul>
+            <div class="back-top"><a href="#">↑ Back to Top</a></div>
+
+            <div class="divider"></div>
+
+            <!-- Section 11 -->
+            <h2 id="section-11"><span class="icon">📝</span> 11. Changes to Terms</h2>
+            <p>We reserve the right to update these terms at any time. We will notify you of any changes by posting the new terms on this page and updating the "Last Updated" date.</p>
+            <div class="highlight-box">
+                <p>📅 We recommend reviewing these terms periodically for any changes.</p>
+            </div>
+            <div class="back-top"><a href="#">↑ Back to Top</a></div>
+
+            <div class="divider"></div>
+
+            <!-- Section 12 -->
+            <h2 id="section-12"><span class="icon">⚖️</span> 12. Governing Law</h2>
+            <p>These terms are governed by and construed in accordance with the laws of Cameroon. Any disputes arising from these terms shall be subject to the exclusive jurisdiction of the courts of Cameroon.</p>
+            <div class="back-top"><a href="#">↑ Back to Top</a></div>
+
+            <div class="divider"></div>
+
+            <!-- Section 13 -->
+            <h2 id="section-13"><span class="icon">📞</span> 13. Contact Information</h2>
+            <p>If you have any questions about these Terms of Service, please contact us:</p>
+            <ul>
+                <li><strong>Email:</strong> prince@example.com</li>
+                <li><strong>Phone:</strong> +237 677 563 929</li>
+                <li><strong>Address:</strong> Cameroon</li>
+            </ul>
+            <div class="highlight-box success">
+                <p>💡 We typically respond to inquiries within 48 hours.</p>
+            </div>
+            <div class="back-top"><a href="#">↑ Back to Top</a></div>
+        </div>
+
+        <!-- ===== BACK TO HOME ===== -->
+        <div class="back-home">
+            <a href="{% url 'home' %}">← Back to Home</a>
+        </div>
+
+        <!-- ===== FOOTER ===== -->
+        <footer class="footer">
+            <p>&copy; 2025 Prince. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="{% url 'privacy' %}">Privacy</a>
+                <a href="{% url 'terms' %}" class="active">Terms</a>
+                <a href="{% url 'home' %}#contact">Contact</a>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

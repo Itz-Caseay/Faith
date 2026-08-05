@@ -77,3 +77,11 @@ def mark_as_read(request, message_id):
         messages.error(request, 'Message not found.')
     
     return redirect('view_messages')
+
+# from django.shortcuts import render
+
+def privacy_policy(request):
+    return render(request, 'privacy.html')
+
+def terms_of_service(request):
+    return render(request, 'terms.html')
