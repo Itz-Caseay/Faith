@@ -128,7 +128,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'faithprince32@gmail.com'
-EMAIL_HOST_PASSWORD = 'yogxbkguxsgacmnt'
+EMAIL_HOST_PASSWORD = 'ajmzqffucsvkbquy'
 DEFAULT_FROM_EMAIL = 'faithprince32@gmail.com'
 CONTACT_EMAIL = 'faithprince32@gmail.com'
 
